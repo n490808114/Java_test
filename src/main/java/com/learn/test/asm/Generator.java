@@ -12,7 +12,7 @@ public class Generator {
     public static void main(String[] args) throws IOException {
         // 读取
         // 读取需要修改的类
-        ClassReader classReader = new ClassReader("com/elastic_demo/alpha/asm/Base");
+        ClassReader classReader = new ClassReader("com/learn/test/asm/Base");
         // COMPUTE_MAXS
         // 用于自动计算方法的最大堆栈大小和最大局部变量数的标志。如果设置了这个标志，
         // 那么由visitMethod方法返回的MethodVisitor.visitMaxs方法的参数将被忽略，
@@ -22,7 +22,8 @@ public class Generator {
         classReader.accept(classVisitor,ClassReader.SKIP_DEBUG);
         byte[] data = classWriter.toByteArray();
         //输出
-        File file = new File("alpha/target/classes/com/elastic_demo/alpha/asm/Base.class");
+        File file = new File("target/classes/com/learn/test/asm/Base.class");
+        System.out.println(file.getAbsolutePath());
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         fileOutputStream.write(data);
         fileOutputStream.close();

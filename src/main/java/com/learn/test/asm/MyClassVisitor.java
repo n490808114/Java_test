@@ -19,7 +19,7 @@ public class MyClassVisitor extends ClassVisitor implements Opcodes{
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         MethodVisitor methodVisitor = cv.visitMethod(access, name, descriptor, signature, exceptions);
-
+        // Base 类中有2个方法,一个无参构造方法,一个process方法,不增强无参构造方法
         if(!"<init>".equals(name) && methodVisitor != null){
             methodVisitor = new MyMethodVisitor(methodVisitor);
         }
@@ -34,12 +34,22 @@ public class MyClassVisitor extends ClassVisitor implements Opcodes{
         @Override
         public void visitCode() {
             super.visitCode();
+            mv.visitFieldInsn(GETSTATIC,"java/lang/System","out","Ljava/io/PrintStream;");
+            mv.visitLdcInsn("start");
+            mv.visitMethodInsn(INVOKEVIRTUAL,"java/io/PrintStream","println","(Ljava/lang/String;)V",false);
 
         }
 
         @Override
         public void visitInsn(int opcode) {
-            super.visitInsn(opcode);
+            boolean flag = (opcode >= Opcodes.IRETURN && opcode <= Opcodes.RETURN) || opcode == Opcodes.ATHROW;
+            if (flag){
+                mv.visitFieldInsn(GETSTATIC,"java/lang/System","out","Ljava/io/PrintStream;");
+                mv.visitLdcInsn("end");
+                mv.visitMethodInsn(INVOKEVIRTUAL,"java/io/PrintStream","println","(Ljava/lang/String;)V",false);
+            }
+            mv.visitInsn(opcode);
+
         }
     }
 }
