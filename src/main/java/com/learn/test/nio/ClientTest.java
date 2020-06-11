@@ -1,9 +1,8 @@
-package com.elastic_demo.alpha.util;
+package com.learn.test.nio;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class ClientTest {
     public static void main(String[] args) {

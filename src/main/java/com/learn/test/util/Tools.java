@@ -2,6 +2,9 @@ package com.learn.test.util;
 
 import java.util.Iterator;
 
+/**
+ * @author admin
+ */
 public class Tools {
     /**
      * Strings.join方法
